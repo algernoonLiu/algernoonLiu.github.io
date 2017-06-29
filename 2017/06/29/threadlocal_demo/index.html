@@ -115,15 +115,16 @@
 
 
 
-<meta name="description" content="不积跬步，无以至千里。">
-<meta property="og:type" content="website">
+<meta name="description" content="ThreadLocal解决SimpleDateFormat线程安全问题原因分析SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如sdf.parse(dateStr)， sdf.format(date)诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，">
+<meta property="og:type" content="article">
 <meta property="og:title" content="阿尔杰农青年个人博客">
-<meta property="og:url" content="https://algernoonliu.github.io/archives/2017/index.html">
+<meta property="og:url" content="https://algernoonliu.github.io/2017/06/29/threadlocal_demo/index.html">
 <meta property="og:site_name" content="阿尔杰农青年个人博客">
-<meta property="og:description" content="不积跬步，无以至千里。">
+<meta property="og:description" content="ThreadLocal解决SimpleDateFormat线程安全问题原因分析SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如sdf.parse(dateStr)， sdf.format(date)诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，">
+<meta property="og:updated_time" content="2017-06-28T08:34:07.249Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿尔杰农青年个人博客">
-<meta name="twitter:description" content="不积跬步，无以至千里。">
+<meta name="twitter:description" content="ThreadLocal解决SimpleDateFormat线程安全问题原因分析SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如sdf.parse(dateStr)， sdf.format(date)诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，">
 
 
 
@@ -151,13 +152,13 @@
 
 
 
-  <link rel="canonical" href="https://algernoonliu.github.io/archives/2017/"/>
+  <link rel="canonical" href="https://algernoonliu.github.io/2017/06/29/threadlocal_demo/"/>
 
 
 
 
 
-  <title>归档 | 阿尔杰农青年个人博客</title>
+  <title> | 阿尔杰农青年个人博客</title>
   
 
 
@@ -192,7 +193,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -324,177 +325,232 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 4 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/29/CountDownLatch/" itemprop="url">
-              
-                <span itemprop="name">未命名</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-29T19:15:07+08:00"
-              content="2017-06-29" >
-          06-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/29/threadlocal_demo/" itemprop="url">
-              
-                <span itemprop="name">未命名</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-29T19:15:07+08:00"
-              content="2017-06-29" >
-          06-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/29/threadlocal/" itemprop="url">
-              
-                <span itemprop="name">未命名</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-29T19:15:07+08:00"
-              content="2017-06-29" >
-          06-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/22/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-22T16:07:41+08:00"
-              content="2017-06-22" >
-          06-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/06/29/threadlocal_demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="algernoon青年">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="阿尔杰农青年个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-29T19:15:07+08:00">
+                2017-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/29/threadlocal_demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/06/29/threadlocal_demo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/29/threadlocal_demo/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ThreadLocal解决SimpleDateFormat线程安全问题"><a href="#ThreadLocal解决SimpleDateFormat线程安全问题" class="headerlink" title="ThreadLocal解决SimpleDateFormat线程安全问题"></a>ThreadLocal解决SimpleDateFormat线程安全问题</h1><h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如<code>sdf.parse(dateStr)</code>， <code>sdf.format(date)</code>诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，如果你的sdf是个static的，那么多个thread 之间就会共享这个sdf，同时也是共享这个Calendar引用，并且，观察<code>sdf.parse()</code>方法，你会发现有如下的调用：</p>
+<pre><code>Date parse() {
+  calendar.clear(); // 清理calendar
+  ... // 执行一些操作, 设置 calendar 的日期什么的
+  calendar.getTime(); // 获取calendar的时间
+}
+</code></pre><p>这里会导致的问题就是，如果线程A调用了<code>sdf.parse()</code>，并且进行了<code>calendar.clear()</code>后还未执行<code>calendar.getTime()</code>的时候，线程B又调用了<code>sdf.parse()</code>，这时候线程B也执行了<code>sdf.clear()</code>方法，这样就导致线程 A 的的calendar数据被清空了(实际上A，B的同时被清空了)。又或者当 A 执行了<code>calendar.clear()</code>后被挂起，这时候 B 开始调用<code>sdf.parse()</code>并顺利结束，这样 A 的 calendar内存储的的date 变成了后来 B 设置的calendar的date。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>最简单的解决方案我们可以把static去掉，这样每个新的线程都会有一个自己的sdf实例，从而避免线程安全的问题。然而，使用这种方法，在高并发的情况下会大量的<code>new sdf</code>以及销毁sdf，这样是非常耗费资源的，所以是不可行的。</p>
+<p>另外一种方法可以使用Threadlocal解决此问题，对于每个线程SimpleDateFormat不存在影响他们之间协作的状态，为每个线程创建一个SimpleDateFormat变量的拷贝或者叫做副本，代码如下：</p>
+<pre><code>/** 
+ * 使用ThreadLocal以空间换时间解决SimpleDateFormat线程安全问题。 
+ */  
+public class DateUtil {  
+
+    private static final String DATE_FORMAT = &quot;yyyy-MM-dd HH:mm:ss&quot;;  
+
+    @SuppressWarnings(&quot;rawtypes&quot;)  
+    private static ThreadLocal threadLocal = new ThreadLocal() {  
+        protected synchronized Object initialValue() {  
+            return new SimpleDateFormat(DATE_FORMAT);  
+        }  
+    };  
+
+    public static DateFormat getDateFormat() {  
+        return (DateFormat) threadLocal.get();  
+    }  
+
+    public static Date parse(String textDate) throws ParseException {  
+        return getDateFormat().parse(textDate);  
+    }  
+}
+</code></pre><p> 创建一个ThreadLocal类变量，这里创建时用了一个匿名类，覆盖了initialValue方法，主要作用是创建时初始化实例，也可以采用下面方式创建。</p>
+<pre><code>//第一次调用get将返回null  
+private static ThreadLocal threadLocal = new ThreadLocal()；  
+//获取线程的变量副本，如果不覆盖initialValue，第一次get返回null，故需要初始化一个SimpleDateFormat，并set到threadLocal中  
+public static DateFormat getDateFormat() {  
+    DateFormat df = (DateFormat) threadLocal.get();  
+    if(df==null){
+        df = new SimpleDateFormat(DATE_FORMAT)  
+        threadLocal.set(df);  
+    }  
+    return df;  
+}
+</code></pre><p>通过以上方式，每个线程会实例化一个SimpleDateFormat实例，实例在线程内共享，达到了解决线程安全性的问题，一定程度上也提高了性能。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.png" alt="algernoon青年 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="algernoon青年 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/29/threadlocal/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/29/CountDownLatch/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -502,6 +558,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -521,8 +588,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.png"
@@ -566,6 +642,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ThreadLocal解决SimpleDateFormat线程安全问题"><span class="nav-number">1.</span> <span class="nav-text">ThreadLocal解决SimpleDateFormat线程安全问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原因分析"><span class="nav-number">1.0.1.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">1.0.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -691,11 +783,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
 
 
   
@@ -714,6 +804,18 @@
       <script id="dsq-count-scr" src="https://algernoon.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://algernoonliu.github.io/2017/06/29/threadlocal_demo/';
+          this.page.identifier = '2017/06/29/threadlocal_demo/';
+          this.page.title = '';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://algernoon.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
@@ -875,26 +977,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 
