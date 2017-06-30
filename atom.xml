@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://algernoonliu.github.io/"/>
-  <updated>2017-06-30T08:45:57.805Z</updated>
+  <updated>2017-06-30T09:00:06.005Z</updated>
   <id>https://algernoonliu.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://algernoonliu.github.io/2017/06/30/ThreadLocal%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/"/>
     <id>https://algernoonliu.github.io/2017/06/30/ThreadLocal深入理解/</id>
     <published>2017-06-30T08:38:49.000Z</published>
-    <updated>2017-06-30T08:45:57.805Z</updated>
+    <updated>2017-06-30T09:00:06.005Z</updated>
     
     <content type="html"><![CDATA[<h3 id="ThreadLocal概述"><a href="#ThreadLocal概述" class="headerlink" title="ThreadLocal概述"></a>ThreadLocal概述</h3><p>学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。</p>
 <p>ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadLocal的描述：</p>
@@ -32,7 +32,7 @@ to associate state with a thread (e.g., a user ID or Transaction ID).
 <p>   1、ThreadLocal不是线程，是用来提供线程内部的局部变量，你可以先简单理解为线程类的属性变量。</p>
 <p>   2、多线程环境中每个线程有自己的ThreadLocal的变量‘拷贝’，（通过get或set方法访问）时能保证各个线程里的变量线程相对独立于其他线程内的变量，修改本线程局部变量不影响其他线程中的局部变量。</p>
 <p>   3、ThreadLocal实例通常来说都是private static类型。 </p>
-<p><strong>总结：</strong></p>
+<p><strong>小结：</strong></p>
 <p>1、每个线程都有自己的局部变量</p>
 <p>   &emsp;&nbsp;&nbsp;每个线程都有一个独立于其他线程的上下文来保存这个变量，一个线程的本地变量对其他线程是不可见的（有前提，后面解释）</p>
 <p>2、独立于变量的初始化副本</p>
