@@ -95,7 +95,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Algernoon, Java, 大数据" />
+  <meta name="keywords" content="多线程,CountDownLatch," />
 
 
 
@@ -113,15 +113,19 @@
 
 
 
-<meta name="description" content="不积跬步，无以至千里。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿尔杰农青年">
-<meta property="og:url" content="https://algernoonliu.github.io/index.html">
+<meta name="description" content="正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后  再  执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编程中跟CountDownLatch相关的以下几点：   CountDownLatch 是什么？ Co">
+<meta name="keywords" content="多线程,CountDownLatch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CountDownLatch学习笔记">
+<meta property="og:url" content="https://algernoonliu.github.io/2017/07/04/CountDownLatch学习笔记/index.html">
 <meta property="og:site_name" content="阿尔杰农青年">
-<meta property="og:description" content="不积跬步，无以至千里。">
+<meta property="og:description" content="正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后  再  执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编程中跟CountDownLatch相关的以下几点：   CountDownLatch 是什么？ Co">
+<meta property="og:image" content="http://orzbqmb0f.bkt.clouddn.com/countdownlatch.png">
+<meta property="og:updated_time" content="2017-07-04T10:54:29.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿尔杰农青年">
-<meta name="twitter:description" content="不积跬步，无以至千里。">
+<meta name="twitter:title" content="CountDownLatch学习笔记">
+<meta name="twitter:description" content="正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后  再  执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编程中跟CountDownLatch相关的以下几点：   CountDownLatch 是什么？ Co">
+<meta name="twitter:image" content="http://orzbqmb0f.bkt.clouddn.com/countdownlatch.png">
 
 
 
@@ -149,13 +153,13 @@
 
 
 
-  <link rel="canonical" href="https://algernoonliu.github.io/"/>
+  <link rel="canonical" href="https://algernoonliu.github.io/2017/07/04/CountDownLatch学习笔记/"/>
 
 
 
 
 
-  <title>阿尔杰农青年</title>
+  <title>CountDownLatch学习笔记 | 阿尔杰农青年</title>
   
 
 
@@ -190,9 +194,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -323,9 +325,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -351,9 +353,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/04/CountDownLatch学习笔记/" itemprop="url">CountDownLatch学习笔记</a></h1>
+          <h1 class="post-title" itemprop="name headline">CountDownLatch学习笔记</h1>
         
 
         <div class="post-meta">
@@ -412,6 +412,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/04/CountDownLatch学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -444,512 +454,260 @@
       
 
       
-        
-          
-          
-正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后  再  执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编程中跟CountDownLatch相关的以下几点：
+        <blockquote>
+<p>正如每个Java文档所描述的那样，<strong>CountDownLatch</strong>是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后  再  执行。在Java并发中，<strong>countdownlatch</strong>的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编程中跟<strong>CountDownLatch</strong>相关的以下几点：</p>
+</blockquote>
+<ul>
+<li><strong>CountDownLatch</strong> 是什么？</li>
+<li><strong>CountDownLatch</strong> 如何工作？</li>
+<li>在实时系统中的应用场景</li>
+<li>应用范例</li>
+<li>常见的面试题</li>
+</ul>
+<h6 id="CountDownLatch是什么"><a href="#CountDownLatch是什么" class="headerlink" title="CountDownLatch是什么"></a>CountDownLatch是什么</h6><p><strong>CountDownLatch</strong>是在java1.5被引入的，跟它一起被引入的并发工具类还有<strong>CyclicBarrier</strong>、<strong>Semaphore</strong>、<strong>ConcurrentHashMap</strong>和<strong>BlockingQueue</strong>，它们都存在于<code>java.util.concurrent</code>包下。<strong>CountDownLatch</strong>这个类能够使一个线程等待其他线程完成各自的工作后再执行。例如，应用程序的主线程希望在负责启动框架服务的线程已经启动所有的框架服务之后再执行。</p>
+<p><strong>CountDownLatch</strong>是通过一个计数器来实现的，计数器的初始值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就会减1。当计数器值到达0时，它表示所有的线程已经完成了任务，然后在闭锁上等待的线程就可以恢复执行任务。</p>
+<p><img src="http://orzbqmb0f.bkt.clouddn.com/countdownlatch.png" alt=""></p>
+<p><strong>CountDownLatch</strong>的伪代码如下所示：</p>
+<pre><code>//Main thread start
+//Create CountDownLatch for N threads
+//Create and start N threads
+//Main thread wait on latch
+//N threads completes there tasks are returns
+//Main thread resume execution
+</code></pre><h6 id="CountDownLatch如何工作"><a href="#CountDownLatch如何工作" class="headerlink" title="CountDownLatch如何工作"></a>CountDownLatch如何工作</h6><p>CountDownLatch.java类中定义的构造函数：</p>
+<pre><code>public CountDownLatch(int count) {
+    if (count &lt; 0) throw new IllegalArgumentException(&quot;count &lt; 0&quot;);
+    this.sync = new Sync(count);
+}
+</code></pre><p>构造器中的<strong>计数值（count）实际上就是闭锁需要等待的线程数量。</strong>这个值只能被设置一次，而且<strong>CountDownLatch没有提供任何机制去重新设置这个计数值</strong>。</p>
+<p>与<strong>CountDownLatch</strong>的第一次交互是主线程等待其他线程。主线程必须在启动其他线程后立即调用<code>CountDownLatch.await()</code>方法。这样主线程的操作就会在这个方法上阻塞，直到其他线程完成各自的任务。</p>
+<p>其他N 个线程必须引用闭锁对象，因为他们需要通知<strong>CountDownLatch</strong>对象，他们已经完成了各自的任务。这种通知机制是通过 <code>CountDownLatch.countDown()</code>方法来完成的；每调用一次这个方法，在构造函数中初始化的count值就减1。所以当N个线程都调 用了这个方法，count的值等于0，然后主线程就能通过await()方法，恢复执行自己的任务。</p>
+<h6 id="在实时系统中的使用场景"><a href="#在实时系统中的使用场景" class="headerlink" title="在实时系统中的使用场景"></a>在实时系统中的使用场景</h6><p>让我们尝试罗列出在java实时系统中<strong>CountDownLatch</strong>都有哪些使用场景。我所罗列的都是我所能想到的。如果你有别的可能的使用方法，请在留言里列出来，这样会帮助到大家。</p>
+<blockquote>
+<p><strong>1.实现最大的并行性：</strong>有时我们想同时启动多个线程，实现最大程度的并行性。例如，我们想测试一个单例类。如果我们创建一个初始计数为1的<strong>CountDownLatch</strong>，并让所有线程都在这个锁上等待，那么我们可以很轻松地完成测试。我们只需调用 一次<code>countDown()</code>方法就可以让所有的等待线程同时恢复执行。</p>
+<p><strong>2.开始执行前等待n个线程完成各自任务：</strong>例如应用程序启动类要确保在处理用户请求前，所有N个外部系统已经启动和运行了。</p>
+<p><strong>3.死锁检测：</strong>一个非常方便的使用场景是，你可以使用n个线程访问共享资源，在每次测试阶段的线程数目是不同的，并尝试产生死锁。</p>
+</blockquote>
+<h6 id="CountDownLatch使用例子"><a href="#CountDownLatch使用例子" class="headerlink" title="CountDownLatch使用例子"></a>CountDownLatch使用例子</h6><p>在这个例子中，我模拟了一个应用程序启动类，它开始时启动了n个线程类，这些线程将检查外部系统并通知闭锁，并且启动类一直在闭锁上等待着。一旦验证和检查了所有外部服务，那么启动类恢复执行。</p>
+<p><strong>BaseHealthChecker.java</strong>：这个类是一个Runnable，负责所有特定的外部服务健康的检测。它删除了重复的代码和闭锁的中心控制代码。</p>
+<pre><code>public abstract class BaseHealthChecker implements Runnable {
 
+    private CountDownLatch _latch;
+    private String _serviceName;
+    private boolean _serviceUp;
 
-CountDownLatch 是什么？
-Co
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/04/CountDownLatch学习笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    //Get latch object in constructor so that after completing the task, thread can countDown() the latch
+    public BaseHealthChecker(String serviceName, CountDownLatch latch) {
+        super();
+        this._latch = latch;
+        this._serviceName = serviceName;
+        this._serviceUp = false;
+    }
+
+    @Override
+    public void run() {
+        try {
+            verifyService();
+            _serviceUp = true;
+        } catch (Throwable t) {
+            t.printStackTrace(System.err);
+            _serviceUp = false;
+        } finally {
+            if(_latch != null) {
+                _latch.countDown();
+            }
+        }
+    }
+
+    public String getServiceName() {
+        return _serviceName;
+    }
+
+    public boolean isServiceUp() {
+        return _serviceUp;
+    }
+    //This methos needs to be implemented by all specific service checker
+    public abstract void verifyService();
+}
+</code></pre><p><strong>NetworkHealthChecker.java</strong>：这个类继承了BaseHealthChecker，实现了verifyService()方法。<strong>DatabaseHealthChecker.java</strong>和<strong>CacheHealthChecker.java</strong>除了服务名和休眠时间外，与NetworkHealthChecker.java是一样的。</p>
+<pre><code>public class NetworkHealthChecker extends BaseHealthChecker {
+    public NetworkHealthChecker (CountDownLatch latch) {
+        super(&quot;Network Service&quot;, latch);
+    }
+
+    @Override
+    public void verifyService() {
+        System.out.println(&quot;Checking &quot; + this.getServiceName());
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(this.getServiceName() + &quot; is UP&quot;);
+    }
+}
+</code></pre><p><strong>ApplicationStartupUtil.java</strong>：这个类是一个主启动类，它负责初始化闭锁，然后等待，直到所有服务都被检测完。</p>
+<pre><code>public class ApplicationStartupUtil {
+    //List of service checkers
+    private static List&lt;BaseHealthChecker&gt; _services;
+
+    //This latch will be used to wait on
+    private static CountDownLatch _latch;
+
+    private ApplicationStartupUtil() {}
+
+    private final static ApplicationStartupUtil INSTANCE = new ApplicationStartupUtil();
+
+    public static ApplicationStartupUtil getInstance() {
+        return INSTANCE;
+    }
+
+    public static boolean checkExternalServices() throws Exception {
+        //Initialize the latch with number of service checkers
+        _latch = new CountDownLatch(3);
+
+        //All add checker in lists
+        _services = new ArrayList&lt;BaseHealthChecker&gt;();
+        _services.add(new NetworkHealthChecker(_latch));
+        _services.add(new CacheHealthChecker(_latch));
+        _services.add(new DatabaseHealthChecker(_latch));
+
+        //Start service checkers using executor framework
+        Executor executor = Executors.newFixedThreadPool(_services.size());
+
+        for(final BaseHealthChecker v : _services) {
+            executor.execute(v);
+        }
+
+        //Now wait till all services are checked
+        _latch.await();
+
+        //Services are file and now proceed startup
+        for(final BaseHealthChecker v : _services) {
+            if( ! v.isServiceUp()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+</code></pre><p>现在你可以写测试代码去检测一下闭锁的功能了。</p>
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        boolean result = false;
+        try {
+            result = ApplicationStartupUtil.checkExternalServices();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(&quot;External services validation completed !! Result was :: &quot;+ result);
+    }
+}
+</code></pre><p>输出结果：</p>
+<pre><code>Checking Network Service
+Checking Cache Service
+Checking Database Service
+Database Service is UP
+Cache Service is UP
+Network Service is UP
+External services validation completed !! Result was :: true
+</code></pre><h6 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h6><p>可以为你的下次面试准备以下一些<strong>CountDownLatch</strong>相关的问题：</p>
+<ul>
+<li>解释一下 <strong>CountDownLatch</strong> 概念?</li>
+<li><strong>CountDownLatch</strong> 和 <strong>CyclicBarrier</strong> 的不同之处?</li>
+<li>给出一些 <strong>CountDownLatch</strong> 使用的例子?</li>
+<li><strong>CountDownLatch</strong> 类中主要的方法?</li>
+</ul>
+
       
     </div>
 
     <div>
       
+        
+
+      
     </div>
 
     <div>
       
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/" itemprop="url">ThreadLocal解决SimpleDateFormat线程安全问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-04T18:49:25+08:00">
-                2017年07月04日
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/" class="leancloud_visitors" data-flag-title="ThreadLocal解决SimpleDateFormat线程安全问题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.png" alt="algernoon青年 WeChat Pay"/>
+          <p>微信打赏</p>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
-
-      
-        
-          
-          原因分析SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如sdf.parse(dateStr)， sdf.format(date)诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，如果你的sdf是个static的，那么多个thread 之间就会共享这
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/06/30/ThreadLocal深入理解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/ThreadLocal深入理解/" itemprop="url">ThreadLocal深入理解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T16:38:49+08:00">
-                2017年06月30日
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/30/ThreadLocal深入理解/" class="leancloud_visitors" data-flag-title="ThreadLocal深入理解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="algernoon青年 Alipay"/>
+          <p>支付宝打赏</p>
         </div>
-      </header>
-    
+      
+    </div>
+  </div>
 
-    <div class="post-body" itemprop="articleBody">
 
       
-      
+    </div>
 
+    <div>
       
         
-          
-          ThreadLocal概述学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。
-ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadL
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/30/ThreadLocal深入理解/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/06/22/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/22/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-22T16:07:41+08:00">
-                2017年06月22日
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
-            
+            <a href="/tags/CountDownLatch/" rel="tag"># CountDownLatch</a>
           
-
-          
-          
-             <span id="/2017/06/22/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/22/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/" rel="next" title="ThreadLocal解决SimpleDateFormat线程安全问题">
+                <i class="fa fa-chevron-left"></i> ThreadLocal解决SimpleDateFormat线程安全问题
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -957,6 +715,12 @@ Quick
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -976,8 +740,17 @@ Quick
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.png"
@@ -1084,6 +857,22 @@ Quick
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#CountDownLatch是什么"><span class="nav-number">1.</span> <span class="nav-text">CountDownLatch是什么</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#CountDownLatch如何工作"><span class="nav-number">2.</span> <span class="nav-text">CountDownLatch如何工作</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#在实时系统中的使用场景"><span class="nav-number">3.</span> <span class="nav-text">在实时系统中的使用场景</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#CountDownLatch使用例子"><span class="nav-number">4.</span> <span class="nav-text">CountDownLatch使用例子</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#常见面试题"><span class="nav-number">5.</span> <span class="nav-text">常见面试题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1198,10 +987,10 @@ Quick
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
