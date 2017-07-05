@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://algernoonliu.github.io/"/>
-  <updated>2017-07-04T10:54:29.274Z</updated>
+  <updated>2017-07-05T09:01:02.292Z</updated>
   <id>https://algernoonliu.github.io/</id>
   
   <author>
@@ -14,6 +14,149 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DelayedQueue学习笔记</title>
+    <link href="https://algernoonliu.github.io/2017/07/05/DelayedQueue%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://algernoonliu.github.io/2017/07/05/DelayedQueue学习笔记/</id>
+    <published>2017-07-05T08:59:42.000Z</published>
+    <updated>2017-07-05T09:01:02.292Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>  <code>DelayQueue</code>是<code>java.util.concurrent</code>中提供的一个很有意思的类。本文将会对<code>DelayQueue</code>做一个介绍，然后列举应用场景。并且提供一个<code>Delayed</code>接口的实现和 Sample 代码。</p>
+<p>  <code>DelayQueue</code>是一个无界的<code>BlockingQueue</code>，用于放置实现了<code>Delayed</code>接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到期时间最长。注意：不能将null元素放置到这种队列中。</p>
+<p>  <strong>Delayed</strong>，一种混合风格的接口，用来标记那些应该在给定延迟时间之后执行的对象。Delayed扩展了<code>Comparable</code>接口，比较的基准为延时的时间值，<code>Delayed</code>接口的实现类getDelay的返回值应为固定值（<code>final</code>）。<code>DelayQueue</code>内部是使用<code>PriorityQueue</code>实现的。</p>
+<h3 id="应用举例"><a href="#应用举例" class="headerlink" title="应用举例"></a>应用举例</h3><p>  <code>DelayQueue</code>阻塞队列在我们系统开发中也常常会用到，例如：缓存系统的设计，缓存中的对象，超过了空闲时间，需要从缓存中移出；任务调度系统，能够准确的把握任务的执行时间。我们可能需要通过线程处理很多时间上要求很严格的数据，如果使用普通的线程，我们就需要遍历所有的对象，一个一个的检查看数据是否过期等，首先这样在执行上的效率不会太高，其次就是这种设计的风格也大大的影响了数据的精度。一个需要12:00点执行的任务可能12:01才执行,这样对数据要求很高的系统有更大的弊端。由此我们可以使用<code>DelayQueue</code>。</p>
+<p>  我们在网咖或者网吧上网时会用到一个网吧综合系统，其中有一个主要功能就是给每一位网民计时，用户充值一定金额会有相应的上网时常，这里我们用DelayQueue模拟实现一下：</p>
+<p>  用<code>DelayQueue</code>存储网民（<code>Wangmin</code>类），每一个考生都有自己的名字和完成试卷的时间，<code>Wangba</code>线程对<code>DelayQueue</code>进行监控，从队列中取出到时间的网民执行下机操作。</p>
+<p>  实现了<code>Delayed</code>接口的网民类</p>
+<pre><code>public class Wangmin implements Delayed {  
+
+    private String name;  
+    //身份证  
+    private String id;  
+    //截止时间  
+    private long endTime;  
+    //定义时间工具类
+    private TimeUnit timeUnit = TimeUnit.SECONDS;
+
+    public Wangmin(String name,String id,long endTime){  
+        this.name=name;  
+        this.id=id;  
+        this.endTime = endTime;  
+    }  
+
+    public String getName(){  
+        return this.name;  
+    }  
+
+    public String getId(){  
+        return this.id;  
+    }  
+
+    /** 
+     * 用来判断是否到了截止时间 
+     */  
+    @Override  
+    public long getDelay(TimeUnit unit) { 
+        //return unit.convert(endTime, TimeUnit.MILLISECONDS) - unit.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+        return endTime - System.currentTimeMillis();
+    }  
+
+    /** 
+     * 相互批较排序用 
+     */  
+    @Override  
+    public int compareTo(Delayed delayed) {  
+        Wangmin w = (Wangmin)delayed;  
+        return this.getDelay(this.timeUnit) - w.getDelay(this.timeUnit) &gt; 0 ? 1:0;  
+    }    
+}
+</code></pre><p>  网吧类</p>
+<pre><code>public class WangBa implements Runnable {  
+
+    private DelayQueue&lt;Wangmin&gt; queue = new DelayQueue&lt;Wangmin&gt;();  
+
+    public boolean yingye =true;  
+
+    /**
+     * 上机 
+     */
+    public void shangji(String name,String id,int money){  
+        Wangmin man = new Wangmin(name, id, 1000 * money + System.currentTimeMillis());  
+        System.out.println(&quot;网名&quot;+man.getName()+&quot; 身份证&quot;+man.getId()+&quot;交钱&quot;+money+&quot;块,开始上机...&quot;);  
+        this.queue.add(man);  
+    }  
+
+    // 下机
+    public void xiaji(Wangmin man){  
+        System.out.println(&quot;网名&quot;+man.getName()+&quot; 身份证&quot;+man.getId()+&quot;时间到下机...&quot;);  
+    }  
+
+    @Override  
+    public void run() {  
+        while(yingye){  
+            try {  
+                Wangmin man = queue.take();  
+                xiaji(man);  
+            } catch (InterruptedException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+
+    public static void main(String args[]){  
+        try{  
+            System.out.println(&quot;网吧开始营业&quot;);  
+            WangBa siyu = new WangBa();  
+            Thread shangwang = new Thread(siyu);  
+            shangwang.start();  
+
+            siyu.shangji(&quot;路人甲&quot;, &quot;123&quot;, 1);  
+            siyu.shangji(&quot;路人乙&quot;, &quot;234&quot;, 10);  
+            siyu.shangji(&quot;路人丙&quot;, &quot;345&quot;, 5);  
+        }  
+        catch(Exception e){  
+            e.printStackTrace();
+        }  
+
+    }  
+}
+</code></pre><h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>  首先看一下<code>DlayedQueue</code>源码</p>
+<pre><code>public class DelayQueue&lt;E extends Delayed&gt; extends AbstractQueue&lt;E&gt;
+implements BlockingQueue&lt;E&gt; {
+
+    private final transient ReentrantLock lock = new ReentrantLock();
+    private final PriorityQueue&lt;E&gt; q = new PriorityQueue&lt;E&gt;();
+
+    // ...
+
+}
+</code></pre><p>  这是一小部分源码，从这段源码可以看出，DelayedQueue中处理的是实现Delayed接口的任务，DelayedQueue使用lock来实现线程同步，使用PriorityQueue来管理任务。那么Delayed接口是什么呢？</p>
+<pre><code>public interface Delayed extends Comparable&lt;Delayed&gt; {
+
+    long getDelay(TimeUnit unit);
+}
+</code></pre><p>  这是<code>Delayed</code>接口的官方注释，意思是：一个混合风格的接口，为创建给定延迟的任务。（翻译的不太好，请纠正）；其中有两个重要的方法compareTo和getDelay，第一个是比较两个任务的延迟时间进行排序，第二个方法用来获取延迟时间。</p>
+<p>  <code>priorityQueue</code>是一种优先级队列，这里优先级就是延迟时间，也就是说进入队列的任务安装优先级进行排序，延迟时间最短的在队列前面，先被处理，也就是说，每次从队列中取出的任务都将是到期的任务。比如我们实现一个缓存，当某个key-value对超期了，我们就可以从队列前取出，然后进行销毁操作。</p>
+<p>  这里有一个实现缓存的例子，链接如下：<br>  <a href="http://www.cnblogs.com/jobs/archive/2007/04/27/730255.html" target="_blank" rel="external">http://www.cnblogs.com/jobs/archive/2007/04/27/730255.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;  &lt;code&gt;DelayQueue&lt;/code&gt;是&lt;code&gt;java.util.concurrent&lt;/code&gt;中提供的一个很有意思的
+    
+    </summary>
+    
+      <category term="java基础" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/"/>
+    
+      <category term="多线程" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="DelayedQueue" scheme="https://algernoonliu.github.io/tags/DelayedQueue/"/>
+    
+  </entry>
   
   <entry>
     <title>CountDownLatch学习笔记</title>
@@ -200,9 +343,9 @@ External services validation completed !! Result was :: true
       <category term="多线程" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
     
-      <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
       <category term="CountDownLatch" scheme="https://algernoonliu.github.io/tags/CountDownLatch/"/>
+    
+      <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
@@ -270,9 +413,9 @@ public static DateFormat getDateFormat() {
       <category term="多线程" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
     
-      <category term="ThreadLocal" scheme="https://algernoonliu.github.io/tags/ThreadLocal/"/>
-    
       <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="ThreadLocal" scheme="https://algernoonliu.github.io/tags/ThreadLocal/"/>
     
   </entry>
   
@@ -431,9 +574,9 @@ public void remove() {
       <category term="多线程" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
     
-      <category term="ThreadLocal" scheme="https://algernoonliu.github.io/tags/ThreadLocal/"/>
-    
       <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="ThreadLocal" scheme="https://algernoonliu.github.io/tags/ThreadLocal/"/>
     
   </entry>
   

@@ -95,7 +95,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ThreadLocal,多线程," />
+  <meta name="keywords" content="多线程,ThreadLocal," />
 
 
 
@@ -114,7 +114,7 @@
 
 
 <meta name="description" content="原因分析SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如sdf.parse(dateStr)， sdf.format(date)诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，如果你的sdf是个static的，那么多个thread 之间就会共享这">
-<meta name="keywords" content="ThreadLocal,多线程">
+<meta name="keywords" content="多线程,ThreadLocal">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThreadLocal解决SimpleDateFormat线程安全问题">
 <meta property="og:url" content="https://algernoonliu.github.io/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/index.html">
@@ -546,9 +546,9 @@ public static DateFormat getDateFormat() {
       
         <div class="post-tags">
           
-            <a href="/tags/ThreadLocal/" rel="tag"># ThreadLocal</a>
-          
             <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+            <a href="/tags/ThreadLocal/" rel="tag"># ThreadLocal</a>
           
         </div>
       
@@ -647,7 +647,7 @@ public static DateFormat getDateFormat() {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -669,7 +669,7 @@ public static DateFormat getDateFormat() {
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

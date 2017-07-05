@@ -95,7 +95,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Algernoon, Java, 大数据" />
+  <meta name="keywords" content="多线程,DelayedQueue," />
 
 
 
@@ -113,15 +113,17 @@
 
 
 
-<meta name="description" content="不积跬步，无以至千里。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿尔杰农青年">
-<meta property="og:url" content="https://algernoonliu.github.io/index.html">
+<meta name="description" content="概述  DelayQueue是java.util.concurrent中提供的一个很有意思的类。本文将会对DelayQueue做一个介绍，然后列举应用场景。并且提供一个Delayed接口的实现和 Sample 代码。   DelayQueue是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到">
+<meta name="keywords" content="多线程,DelayedQueue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DelayedQueue学习笔记">
+<meta property="og:url" content="https://algernoonliu.github.io/2017/07/05/DelayedQueue学习笔记/index.html">
 <meta property="og:site_name" content="阿尔杰农青年">
-<meta property="og:description" content="不积跬步，无以至千里。">
+<meta property="og:description" content="概述  DelayQueue是java.util.concurrent中提供的一个很有意思的类。本文将会对DelayQueue做一个介绍，然后列举应用场景。并且提供一个Delayed接口的实现和 Sample 代码。   DelayQueue是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到">
+<meta property="og:updated_time" content="2017-07-05T09:01:02.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿尔杰农青年">
-<meta name="twitter:description" content="不积跬步，无以至千里。">
+<meta name="twitter:title" content="DelayedQueue学习笔记">
+<meta name="twitter:description" content="概述  DelayQueue是java.util.concurrent中提供的一个很有意思的类。本文将会对DelayQueue做一个介绍，然后列举应用场景。并且提供一个Delayed接口的实现和 Sample 代码。   DelayQueue是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到">
 
 
 
@@ -149,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="https://algernoonliu.github.io/"/>
+  <link rel="canonical" href="https://algernoonliu.github.io/2017/07/05/DelayedQueue学习笔记/"/>
 
 
 
 
 
-  <title>阿尔杰农青年</title>
+  <title>DelayedQueue学习笔记 | 阿尔杰农青年</title>
   
 
 
@@ -190,9 +192,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -323,9 +323,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -351,9 +351,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/DelayedQueue学习笔记/" itemprop="url">DelayedQueue学习笔记</a></h1>
+          <h1 class="post-title" itemprop="name headline">DelayedQueue学习笔记</h1>
         
 
         <div class="post-meta">
@@ -412,6 +410,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/05/DelayedQueue学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -444,675 +452,213 @@
       
 
       
-        
-          
-          概述  DelayQueue是java.util.concurrent中提供的一个很有意思的类。本文将会对DelayQueue做一个介绍，然后列举应用场景。并且提供一个Delayed接口的实现和 Sample 代码。
-  DelayQueue是一个无界的BlockingQueue，用于放置实现了Delayed接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/05/DelayedQueue学习笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>  <code>DelayQueue</code>是<code>java.util.concurrent</code>中提供的一个很有意思的类。本文将会对<code>DelayQueue</code>做一个介绍，然后列举应用场景。并且提供一个<code>Delayed</code>接口的实现和 Sample 代码。</p>
+<p>  <code>DelayQueue</code>是一个无界的<code>BlockingQueue</code>，用于放置实现了<code>Delayed</code>接口的对象，其中的对象只能在其到期时才能从队列中取走。这种队列是有序的，即队头对象的延迟到期时间最长。注意：不能将null元素放置到这种队列中。</p>
+<p>  <strong>Delayed</strong>，一种混合风格的接口，用来标记那些应该在给定延迟时间之后执行的对象。Delayed扩展了<code>Comparable</code>接口，比较的基准为延时的时间值，<code>Delayed</code>接口的实现类getDelay的返回值应为固定值（<code>final</code>）。<code>DelayQueue</code>内部是使用<code>PriorityQueue</code>实现的。</p>
+<h3 id="应用举例"><a href="#应用举例" class="headerlink" title="应用举例"></a>应用举例</h3><p>  <code>DelayQueue</code>阻塞队列在我们系统开发中也常常会用到，例如：缓存系统的设计，缓存中的对象，超过了空闲时间，需要从缓存中移出；任务调度系统，能够准确的把握任务的执行时间。我们可能需要通过线程处理很多时间上要求很严格的数据，如果使用普通的线程，我们就需要遍历所有的对象，一个一个的检查看数据是否过期等，首先这样在执行上的效率不会太高，其次就是这种设计的风格也大大的影响了数据的精度。一个需要12:00点执行的任务可能12:01才执行,这样对数据要求很高的系统有更大的弊端。由此我们可以使用<code>DelayQueue</code>。</p>
+<p>  我们在网咖或者网吧上网时会用到一个网吧综合系统，其中有一个主要功能就是给每一位网民计时，用户充值一定金额会有相应的上网时常，这里我们用DelayQueue模拟实现一下：</p>
+<p>  用<code>DelayQueue</code>存储网民（<code>Wangmin</code>类），每一个考生都有自己的名字和完成试卷的时间，<code>Wangba</code>线程对<code>DelayQueue</code>进行监控，从队列中取出到时间的网民执行下机操作。</p>
+<p>  实现了<code>Delayed</code>接口的网民类</p>
+<pre><code>public class Wangmin implements Delayed {  
+
+    private String name;  
+    //身份证  
+    private String id;  
+    //截止时间  
+    private long endTime;  
+    //定义时间工具类
+    private TimeUnit timeUnit = TimeUnit.SECONDS;
+
+    public Wangmin(String name,String id,long endTime){  
+        this.name=name;  
+        this.id=id;  
+        this.endTime = endTime;  
+    }  
+
+    public String getName(){  
+        return this.name;  
+    }  
+
+    public String getId(){  
+        return this.id;  
+    }  
+
+    /** 
+     * 用来判断是否到了截止时间 
+     */  
+    @Override  
+    public long getDelay(TimeUnit unit) { 
+        //return unit.convert(endTime, TimeUnit.MILLISECONDS) - unit.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+        return endTime - System.currentTimeMillis();
+    }  
+
+    /** 
+     * 相互批较排序用 
+     */  
+    @Override  
+    public int compareTo(Delayed delayed) {  
+        Wangmin w = (Wangmin)delayed;  
+        return this.getDelay(this.timeUnit) - w.getDelay(this.timeUnit) &gt; 0 ? 1:0;  
+    }    
+}
+</code></pre><p>  网吧类</p>
+<pre><code>public class WangBa implements Runnable {  
+
+    private DelayQueue&lt;Wangmin&gt; queue = new DelayQueue&lt;Wangmin&gt;();  
+
+    public boolean yingye =true;  
+
+    /**
+     * 上机 
+     */
+    public void shangji(String name,String id,int money){  
+        Wangmin man = new Wangmin(name, id, 1000 * money + System.currentTimeMillis());  
+        System.out.println(&quot;网名&quot;+man.getName()+&quot; 身份证&quot;+man.getId()+&quot;交钱&quot;+money+&quot;块,开始上机...&quot;);  
+        this.queue.add(man);  
+    }  
+
+    // 下机
+    public void xiaji(Wangmin man){  
+        System.out.println(&quot;网名&quot;+man.getName()+&quot; 身份证&quot;+man.getId()+&quot;时间到下机...&quot;);  
+    }  
+
+    @Override  
+    public void run() {  
+        while(yingye){  
+            try {  
+                Wangmin man = queue.take();  
+                xiaji(man);  
+            } catch (InterruptedException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+
+    public static void main(String args[]){  
+        try{  
+            System.out.println(&quot;网吧开始营业&quot;);  
+            WangBa siyu = new WangBa();  
+            Thread shangwang = new Thread(siyu);  
+            shangwang.start();  
+
+            siyu.shangji(&quot;路人甲&quot;, &quot;123&quot;, 1);  
+            siyu.shangji(&quot;路人乙&quot;, &quot;234&quot;, 10);  
+            siyu.shangji(&quot;路人丙&quot;, &quot;345&quot;, 5);  
+        }  
+        catch(Exception e){  
+            e.printStackTrace();
+        }  
+
+    }  
+}
+</code></pre><h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>  首先看一下<code>DlayedQueue</code>源码</p>
+<pre><code>public class DelayQueue&lt;E extends Delayed&gt; extends AbstractQueue&lt;E&gt;
+implements BlockingQueue&lt;E&gt; {
+
+    private final transient ReentrantLock lock = new ReentrantLock();
+    private final PriorityQueue&lt;E&gt; q = new PriorityQueue&lt;E&gt;();
+
+    // ...
+
+}
+</code></pre><p>  这是一小部分源码，从这段源码可以看出，DelayedQueue中处理的是实现Delayed接口的任务，DelayedQueue使用lock来实现线程同步，使用PriorityQueue来管理任务。那么Delayed接口是什么呢？</p>
+<pre><code>public interface Delayed extends Comparable&lt;Delayed&gt; {
+
+    long getDelay(TimeUnit unit);
+}
+</code></pre><p>  这是<code>Delayed</code>接口的官方注释，意思是：一个混合风格的接口，为创建给定延迟的任务。（翻译的不太好，请纠正）；其中有两个重要的方法compareTo和getDelay，第一个是比较两个任务的延迟时间进行排序，第二个方法用来获取延迟时间。</p>
+<p>  <code>priorityQueue</code>是一种优先级队列，这里优先级就是延迟时间，也就是说进入队列的任务安装优先级进行排序，延迟时间最短的在队列前面，先被处理，也就是说，每次从队列中取出的任务都将是到期的任务。比如我们实现一个缓存，当某个key-value对超期了，我们就可以从队列前取出，然后进行销毁操作。</p>
+<p>  这里有一个实现缓存的例子，链接如下：<br>  <a href="http://www.cnblogs.com/jobs/archive/2007/04/27/730255.html" target="_blank" rel="external">http://www.cnblogs.com/jobs/archive/2007/04/27/730255.html</a></p>
+
       
     </div>
 
     <div>
       
+        
+
+      
     </div>
 
     <div>
       
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/07/04/CountDownLatch学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
         
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/04/CountDownLatch学习笔记/" itemprop="url">CountDownLatch学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-04T18:53:05+08:00">
-                2017年07月04日
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/07/04/CountDownLatch学习笔记/" class="leancloud_visitors" data-flag-title="CountDownLatch学习笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechatpay.png" alt="algernoon青年 WeChat Pay"/>
+          <p>微信打赏</p>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
-
-      
-        
-          
-          
-正如每个Java文档所描述的那样，CountDownLatch是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后  再  执行。在Java并发中，countdownlatch的概念是一个常见的面试题，所以一定要确保你很好的理解了它。在这篇文章中，我将会涉及到在Java并发编程中跟CountDownLatch相关的以下几点：
-
-
-CountDownLatch 是什么？
-Co
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/04/CountDownLatch学习笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/" itemprop="url">ThreadLocal解决SimpleDateFormat线程安全问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-04T18:49:25+08:00">
-                2017年07月04日
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/" class="leancloud_visitors" data-flag-title="ThreadLocal解决SimpleDateFormat线程安全问题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="algernoon青年 Alipay"/>
+          <p>支付宝打赏</p>
         </div>
-      </header>
-    
+      
+    </div>
+  </div>
 
-    <div class="post-body" itemprop="articleBody">
 
       
-      
+    </div>
 
+    <div>
       
         
-          
-          原因分析SimpleDateFormat(下面简称sdf)类内部有一个Calendar对象引用，它用来储存和这个sdf相关的日期信息，例如sdf.parse(dateStr)， sdf.format(date)诸如此类的方法参数传入的日期相关String，Date等等，都是交友Calendar引用来储存的。这样就会导致一个问题，如果你的sdf是个static的，那么多个thread 之间就会共享这
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/06/30/ThreadLocal深入理解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/30/ThreadLocal深入理解/" itemprop="url">ThreadLocal深入理解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T16:38:49+08:00">
-                2017年06月30日
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
-
+            <a href="/tags/DelayedQueue/" rel="tag"># DelayedQueue</a>
           
-            
-          
-
-          
-          
-             <span id="/2017/06/30/ThreadLocal深入理解/" class="leancloud_visitors" data-flag-title="ThreadLocal深入理解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          ThreadLocal概述学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。
-ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadL
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/30/ThreadLocal深入理解/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/04/CountDownLatch学习笔记/" rel="next" title="CountDownLatch学习笔记">
+                <i class="fa fa-chevron-left"></i> CountDownLatch学习笔记
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/06/22/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="algernoon青年">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="阿尔杰农青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/22/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-22T16:07:41+08:00">
-                2017年06月22日
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/22/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/22/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1120,6 +666,12 @@ Quick
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -1139,8 +691,17 @@ Quick
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.png"
@@ -1247,6 +808,22 @@ Quick
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用举例"><span class="nav-number">2.</span> <span class="nav-text">应用举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">3.</span> <span class="nav-text">源码分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1361,10 +938,10 @@ Quick
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
