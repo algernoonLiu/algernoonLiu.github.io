@@ -95,7 +95,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="多线程,ThreadLocal," />
+  <meta name="keywords" content="Algernoon, Java, 大数据" />
 
 
 
@@ -113,17 +113,16 @@
 
 
 
-<meta name="description" content="ThreadLocal概述学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。 ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadL">
-<meta name="keywords" content="多线程,ThreadLocal">
+<meta name="description" content="不积跬步，无以至千里。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ThreadLocal深入理解">
-<meta property="og:url" content="https://algernoonliu.github.io/2017/06/30/ThreadLocal深入理解/index.html">
+<meta property="og:title" content="ActiveMQ学习笔记(一)">
+<meta property="og:url" content="https://algernoonliu.github.io/2017/07/07/ActiveMQ学习笔记-一/index.html">
 <meta property="og:site_name" content="阿尔杰农青年">
-<meta property="og:description" content="ThreadLocal概述学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。 ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadL">
-<meta property="og:updated_time" content="2017-06-30T09:00:06.005Z">
+<meta property="og:description" content="不积跬步，无以至千里。">
+<meta property="og:updated_time" content="2017-07-07T07:16:33.210Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ThreadLocal深入理解">
-<meta name="twitter:description" content="ThreadLocal概述学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。 ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadL">
+<meta name="twitter:title" content="ActiveMQ学习笔记(一)">
+<meta name="twitter:description" content="不积跬步，无以至千里。">
 
 
 
@@ -151,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="https://algernoonliu.github.io/2017/06/30/ThreadLocal深入理解/"/>
+  <link rel="canonical" href="https://algernoonliu.github.io/2017/07/07/ActiveMQ学习笔记-一/"/>
 
 
 
 
 
-  <title>ThreadLocal深入理解 | 阿尔杰农青年</title>
+  <title>ActiveMQ学习笔记(一) | 阿尔杰农青年</title>
   
 
 
@@ -334,7 +333,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/06/30/ThreadLocal深入理解/">
+    <link itemprop="mainEntityOfPage" href="https://algernoonliu.github.io/2017/07/07/ActiveMQ学习笔记-一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="algernoon青年">
@@ -351,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ThreadLocal深入理解</h1>
+          <h1 class="post-title" itemprop="name headline">ActiveMQ学习笔记(一)</h1>
         
 
         <div class="post-meta">
@@ -363,8 +362,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-30T16:38:49+08:00">
-                2017年06月30日
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-07T15:16:33+08:00">
+                2017年07月07日
               </time>
             
 
@@ -374,39 +373,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java基础/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -415,7 +381,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/06/30/ThreadLocal深入理解/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/07/07/ActiveMQ学习笔记-一/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -424,7 +390,7 @@
 
           
           
-             <span id="/2017/06/30/ThreadLocal深入理解/" class="leancloud_visitors" data-flag-title="ThreadLocal深入理解">
+             <span id="/2017/07/07/ActiveMQ学习笔记-一/" class="leancloud_visitors" data-flag-title="ActiveMQ学习笔记(一)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -452,142 +418,7 @@
       
 
       
-        <h3 id="ThreadLocal概述"><a href="#ThreadLocal概述" class="headerlink" title="ThreadLocal概述"></a>ThreadLocal概述</h3><p>学习一个东西首先要知道为什么要引入它，就是我们能用它来干什么。所以我们先来看看ThreadLocal对我们到底有什么用，然后再来看看它的实现原理。</p>
-<p>ThreadLocal如果单纯从名字上来看像是“本地线程”这么个意思，只能说这个名字起的确实不太好，很容易让人产生误解，ThreadLocalVariable（线程本地变量）应该是个更好的名字。我们先看一下官方对ThreadLocal的描述：</p>
-<pre><code>This class provides thread-local variables.  These variables differ from their normal counterparts in that each
-thread that accesses one (via its {@code get} or {@code set} method) has its own, independently initialized
-copy of the variable.  {@code ThreadLocal} instances are typically private static fields in classes that wish
-to associate state with a thread (e.g., a user ID or Transaction ID).
-</code></pre><p> API表达了下面几种观点：</p>
-<p>   1、ThreadLocal不是线程，是用来提供线程内部的局部变量，你可以先简单理解为线程类的属性变量。</p>
-<p>   2、多线程环境中每个线程有自己的ThreadLocal的变量‘拷贝’，（通过get或set方法访问）时能保证各个线程里的变量线程相对独立于其他线程内的变量，修改本线程局部变量不影响其他线程中的局部变量。</p>
-<p>   3、ThreadLocal实例通常来说都是private static类型。 </p>
-<p><strong>小结：</strong></p>
-<p>1、每个线程都有自己的局部变量</p>
-<p>   &emsp;&nbsp;&nbsp;每个线程都有一个独立于其他线程的上下文来保存这个变量，一个线程的本地变量对其他线程是不可见的（有前提，后面解释）</p>
-<p>2、独立于变量的初始化副本</p>
-<p>   &emsp;&nbsp;&nbsp;ThreadLocal可以给一个初始值，而每个线程都会获得这个初始化值的一个副本，这样才能保证不同的线程都有一份拷贝。</p>
-<p>3、状态与某一个线程相关联</p>
-<p>   &emsp;&nbsp;&nbsp;ThreadLocal 不是用于解决共享变量的问题的，不是为了协调线程同步而存在，而是为了方便每个线程处理自己的状态而引入的一个机制，理解这点对正确使用ThreadLocal至关重要。</p>
-<blockquote>
-<p>ThreadLocal适用于资源共享但不需要维护状态的情况，也就是一个线程对资源的修改，不影响另一个线程的运行；这种设计是“空间换时间”，synchronized顺序执行是“时间换取空间”。</p>
-<p>ThreadLocal的主要应用场景为按线程多实例（每个线程对应一个实例）的对象的访问，并且这个对象很多地方都要用到。例如：同一个网站登录用户，每个用户服务器会为其开一个线程，每个线程中创建一个ThreadLocal，里面存用户基本信息等，在很多页面跳转时，会显示用户信息或者得到用户的一些信息等频繁操作，这样多线程之间并没有联系而且当前线程也可以及时获取想要的数据。</p>
-</blockquote>
-<h3 id="ThreadLocal实现原理"><a href="#ThreadLocal实现原理" class="headerlink" title="ThreadLocal实现原理"></a>ThreadLocal实现原理</h3><p>ThreadLocal可以看做是一个容器，容器里面存放着属于当前线程的变量。ThreadLocal类提供了四个对外开放的接口方法，这也是用户操作ThreadLocal类的基本方法： </p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">方法</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">T</td>
-<td style="text-align:left">get()&emsp;返回此线程局部变量的当前线程副本中的值。</td>
-</tr>
-<tr>
-<td style="text-align:left">protected T</td>
-<td style="text-align:left">initialValue()&emsp;返回此线程局部变量的当前线程的“初始值”。</td>
-</tr>
-<tr>
-<td style="text-align:left">void</td>
-<td style="text-align:left">remove()&emsp;移除此线程局部变量当前线程的值。</td>
-</tr>
-<tr>
-<td style="text-align:left">void</td>
-<td style="text-align:left">set(T value)&emsp;将此线程局部变量的当前线程副本中的值设置为指定值。</td>
-</tr>
-</tbody>
-</table>
-<p>可以通过上述的几个方法实现ThreadLocal中变量的访问，数据设置，初始化以及删除局部变量，那ThreadLocal内部是如何为每一个线程维护变量副本的呢？</p>
-<p>其实在ThreadLocal类中有一个静态内部类ThreadLocalMap(其类似于Map)，用键值对的形式存储每一个线程的变量副本，ThreadLocalMap中元素的key为当前ThreadLocal对象，而value对应线程的变量副本，每个线程可能存在多个ThreadLocal。</p>
-<p>ThreadLocal类源代码：</p>
-<pre><code>/**
- * Returns the value in the current thread&apos;s copy of this
- * thread-local variable.  If the variable has no value for thecurrent thread, it is first initialized to the
- * value returned by an invocation of the {@link #initialValue} method.
- * @return the current thread&apos;s value of this thread-local
- */
-public T get() {
-    Thread t = Thread.currentThread();//当前线程
-    ThreadLocalMap map = getMap(t);//获取当前线程对应的ThreadLocalMap
-    if (map != null) {
-        ThreadLocalMap.Entry e = map.getEntry(this);//获取对应ThreadLocal的变量值
-        if (e != null) {
-            @SuppressWarnings(&quot;unchecked&quot;)
-            T result = (T)e.value;
-            return result;
-        }
-    }
-    return setInitialValue();//若当前线程还未创建ThreadLocalMap，则返回调用此方法并在其中调用createMap方法进行创建并返回初始值。
-}
-
-//设置变量的值
-public void set(T value) {
-   Thread t = Thread.currentThread();
-   ThreadLocalMap map = getMap(t);
-   if (map != null)
-       map.set(this, value);
-   else
-       createMap(t, value);
-}
-
-private T setInitialValue() {
-   T value = initialValue();
-   Thread t = Thread.currentThread();
-   ThreadLocalMap map = getMap(t);
-   if (map != null)
-       map.set(this, value);
-   else
-       createMap(t, value);
-   return value;
-}
-
-/**
- * 为当前线程创建一个ThreadLocalMap的threadlocals,并将第一个值存入到当前map中
- * @param t the current thread
- * @param firstValue value for the initial entry of the map
- */
-void createMap(Thread t, T firstValue) {
-    t.threadLocals = new ThreadLocalMap(this, firstValue);
-}
-
-//删除当前线程中ThreadLocalMap对应的ThreadLocal
-public void remove() {
-       ThreadLocalMap m = getMap(Thread.currentThread());
-       if (m != null)
-           m.remove(this);
-}
-</code></pre><p>上述是在ThreadLocal类中的几个主要的方法，他们的核心都是对其内部类ThreadLocalMap进行操作，下面看一下该类的源代码：</p>
-<pre><code>static class ThreadLocalMap {
-    //map中的每个节点Entry,其键key是ThreadLocal并且还是弱引用，这也导致了后续会产生内存泄漏问题的原因。
-     static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; {
-        /** The value associated with this ThreadLocal. */
-        Object value;
-
-        Entry(ThreadLocal&lt;?&gt; k, Object v) {
-            super(k);
-            value = v;
-        }
-    }
-    /**
-     * 初始化容量为16，以为对其扩充也必须是2的指数 
-     */
-    private static final int INITIAL_CAPACITY = 16;
-    /**
-     * 真正用于存储线程的每个ThreadLocal的数组，将ThreadLocal和其对应的值包装为一个Entry。
-     */
-    private Entry[] table;
-
-
-    ///....其他的方法和操作都和map的类似
-}
-</code></pre><p>总之，为不同线程创建不同的ThreadLocalMap，用线程本身为区分点，每个线程之间其实没有任何的联系，说是说存放了变量的副本，其实可以理解为为每个线程单独new了一个对象。</p>
-<h3 id="内存泄漏问题"><a href="#内存泄漏问题" class="headerlink" title="内存泄漏问题"></a>内存泄漏问题</h3><p>在上面提到过，每个thread中都存在一个map，map的类型是ThreadLocal.ThreadLocalMap。Map中的key为一个threadlocal实例。这个Map的确使用了弱引用，不过弱引用只是针对key。每个key都弱引用指向threadlocal。当把threadlocal实例置为null以后，没有任何强引用指向threadlocal实例，所以threadlocal将会被gc回收。但是，我们的value却不能回收，因为存在一条从current thread连接过来的强引用。只有当前thread结束以后，current thread就不会存在栈中，强引用断开，Current Thread，Map，value将全部被GC回收。</p>
-<p>所以得出一个结论就是只要这个线程对象被gc回收，就不会出现内存泄露，但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。比如使用线程池的时候，线程结束是不会销毁的，会再次使用的。就可能出现内存泄露。</p>
-<p>虽然ThreadLocalMap已经使用了weakReference，但是还是建议能够显示的使用remove方法。</p>
-
+        
       
     </div>
 
@@ -635,14 +466,6 @@ public void remove() {
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/多线程/" rel="tag"># 多线程</a>
-          
-            <a href="/tags/ThreadLocal/" rel="tag"># ThreadLocal</a>
-          
-        </div>
-      
 
       
       
@@ -652,15 +475,15 @@ public void remove() {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/07/05/DelayedQueue学习笔记/" rel="next" title="DelayedQueue学习笔记">
+                <i class="fa fa-chevron-left"></i> DelayedQueue学习笔记
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/04/ThreadLocal解决SimpleDateFormat线程安全问题/" rel="prev" title="ThreadLocal解决SimpleDateFormat线程安全问题">
-                ThreadLocal解决SimpleDateFormat线程安全问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -709,17 +532,8 @@ public void remove() {
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.png"
@@ -826,22 +640,6 @@ public void remove() {
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal概述"><span class="nav-number">1.</span> <span class="nav-text">ThreadLocal概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal实现原理"><span class="nav-number">2.</span> <span class="nav-text">ThreadLocal实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存泄漏问题"><span class="nav-number">3.</span> <span class="nav-text">内存泄漏问题</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
