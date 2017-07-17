@@ -166,9 +166,9 @@ implements BlockingQueue&lt;E&gt; {
       <category term="多线程" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
     
-      <category term="DelayedQueue" scheme="https://algernoonliu.github.io/tags/DelayedQueue/"/>
-    
       <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="DelayedQueue" scheme="https://algernoonliu.github.io/tags/DelayedQueue/"/>
     
   </entry>
   
@@ -357,9 +357,9 @@ External services validation completed !! Result was :: true
       <category term="多线程" scheme="https://algernoonliu.github.io/categories/java%E5%9F%BA%E7%A1%80/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
     
-      <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
       <category term="CountDownLatch" scheme="https://algernoonliu.github.io/tags/CountDownLatch/"/>
+    
+      <category term="多线程" scheme="https://algernoonliu.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
